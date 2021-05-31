@@ -3,6 +3,9 @@
 This script automates a lot of the set up process of M365 ATP and Exchange Online. This is not the first itteration of this script, and I have been making steady adjustments to it for a few months now based on customer feedback. I beleive it is safe to deploy just about anywhere and is a great place to start with M365 ATP.
 This script is safe to run after communicating what ATP is to the client and setting expectations. It's not majorly disruptive, but it'd a good idea to let the customer know.
 
+# Prerequisites
+Make sure you modify the script variables (in the begining of script) to include your MSP's Domain and add any email addresses which should be whitelisted by default.
+
 # The following items will be configured automatically:
 
 - Mail Forwarding to MSP from the Customers Admin Mailbox
