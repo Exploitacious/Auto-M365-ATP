@@ -66,12 +66,13 @@ The following items will be configured automatically:
 
         
          # Domains and Senders to whitelist by default. Comma seperated
+	 # The new Intuit QuickBooks Online billing email likes to trigger a phishing response so it has been whitelisted by default.
 
-        $ExcludedDomains = "Umbrellaitgroup.com", "intuit.com"
+        $ExcludedDomains = "YourMSPDomain.com", "intuit.com"
 
-        $ExcludedSenders = "connect@e.connect.intuit.com", "info@umbrellaitgroup.com", "security@umbrellaitgroup.com"
+        $ExcludedSenders = "connect@e.connect.intuit.com", "Alerting/Security@YourMSPDomain.com"
 
-        $MSPAlertAddress = "Security@umbrellaitgroup.com"
+        $MSPAlertAddress = "Security@YourMSPDomain.com"
 
 
 
