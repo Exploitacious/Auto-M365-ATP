@@ -30,7 +30,7 @@ Company : Umbrella IT Solutions
 
         # Domains and Senders to whitelist by default from ALL POLICIES. This includes Phishing, Anti-Spam, Etc.. Comma seperated.
 
-            $ExcludedDomains = "intuit.com", "Umbrellaitgorup.com" | Select-Object -Unique # QB Online has been getting popped for phishing lately. Highly reccomended to include Intuit.
+            $ExcludedDomains = "intuit.com", "Umbrellaitgroup.com" | Select-Object -Unique # QB Online has been getting popped for phishing lately. Highly reccomended to include Intuit.
 
             $ExcludedSenders = "connect@e.connect.intuit.com", "info@umbrellaitgroup.com", "security@umbrellaitgroup.com", "advanced-threat-protection@protection.outlook.com" | Select-Object -Unique
 
