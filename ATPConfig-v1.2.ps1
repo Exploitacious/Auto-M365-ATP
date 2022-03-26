@@ -48,7 +48,6 @@ Company : Umbrella IT Solutions
 
         # Other Variables
 
-            $CusAdminAddress = Read-Host "Enter the Customer's ADMIN EMAIL ADDRESS. This is where you will recieve alerts, notifications and set up admin access to all mailboxes. MUST BE AN INTERNAL ADMIN ADDRESS"
             $MessageColor = "Green"
             $AssesmentColor = "Yellow"
             # $AllowedForwardingGroup =  Read-Host "Enter the GUID of the SECURITY GROUP ** IN " QUOTES ** which will allow forwarding to external receipients. (MUST BE ACTIVE IN AAD)"
@@ -59,18 +58,35 @@ Company : Umbrella IT Solutions
 ## Script Start
 #################################################
 
-    $Answer = Read-Host "Have you connected all the required PowerShell CMDlets? Y/N "
-    if ($Answer -eq 'n' -or $Answer -eq 'no') {
+$Answer = Read-Host "Would you like this script to configure your Microsoft 365 Environment for Advanced Threat Protection in Exchange Online?"
+if ($Answer -eq 'y' -or $Answer -eq 'yes') {
 
-        ## Connecting Modules
+    $Answer = Read-Host "Have you connected all the required PowerShell CMDlets? (ExchangeOnline, IPPS) Y or N"
+    if ($Answer -eq 'N' -or $Answer -eq 'no') {
 
-        Write-Host -foregroundcolor $AssesmentColor "Connecting Modules (ExchangeOnline, MSOL, AzureAD, MSGraph) ..."
+        Write-Host
+        Write-Host -ForegroundColor $MessageColor "Please enter your Tenant's Global Admin Credentials"
+        Write-Host
+        Write-Host
 
-        Connect-ExchangeOnline
+        $Cred = Get-Credential
 
-        Connect-IPPSSession
+        Connect-ExchangeOnline -UserPrincipalName $Cred.Username
+
+        Connect-IPPSSession -UserPrincipalName $Cred.Username
 
     }
+
+        Write-Host
+        Write-Host
+
+        $CusAdminAddress = $Cred.UserName
+
+        if ($null -eq $CusAdminAddress) {
+            Write-Host
+            Write-Host
+            $CusAdminAddress = Read-Host "Enter the Customer's ADMIN EMAIL ADDRESS. This is where you will recieve alerts, notifications and set up admin access to all mailboxes. MUST BE AN INTERNAL ADMIN ADDRESS"
+        }
 
     # Setup Forwarding and Disable Junk Folder for the Alerting Mailbox
         Write-Host -foregroundcolor $MessageColor "Seting up automatic forwarding from $CusAdminAddress > to > $MSPAlertAddress"
@@ -530,7 +546,16 @@ Company : Umbrella IT Solutions
         New-SafeLinksRule @SafeLinksRuleParam
 
     Write-Host -foregroundcolor $MessageColor "Safe Links Global Defaults, Policies and Rules [v1.2] has been successfully configured"
+}
 
-    Write-Host
-    Write-Host
-    Write-Host -ForegroundColor $MessageColor "This concludes the script for [v1.2] ATP Master Configs"
+
+    # For some reason, this one policy fails to apply even though it's configured just fine. Try/Catch
+        Try {
+            Get-SafeAttachmentRule "Safe Attachments Rule [v1.2]"
+        } Catch {
+            New-SafeAttachmentRule -Name "Safe Attachments Rule [v1.2]" -SafeAttachmentPolicy "Safe Attachments Policy [v1.2]" -Comments "Safe Attachments Rule [v1.2] configured via M365 PS Scripting Tools" -RecipientDomainIs $RecipientDomains -ExceptIfSentTo $CusAdminAddress -Enabled $true -Priority 1
+        }
+
+Write-Host
+Write-Host
+Write-Host -ForegroundColor $MessageColor "This concludes the script for [v1.2] ATP Master Configs"
