@@ -1,7 +1,0 @@
-## Prior to implementing Auto-M365-ATP it is highly recomended to communicate what ATP is and how it will affect your users.
-## I have created this mailer to blast to all users before we hit run on the script. This way it minimizes the questions and tickets when users see the new daily quarantine mailers coming through.
-# You may freely use the language and style of the mailer, but all art and graphics hosted at Beefree.io and any logos are property of Umbrella IT Solutions.
-# This template was created using Bee Pro (https://pro.beefree.io/) for our PSA to send as a bulk mailer.
-
-https://pro-bee-beepro-messages.s3.amazonaws.com/644379/626526/1259823/6072302.html
-
